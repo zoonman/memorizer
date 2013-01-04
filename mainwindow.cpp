@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	trayIconMenu = new QMenu(this);
 	trayIconMenu->addAction(ui->actionGetNewWord);
 	trayIconMenu->addSeparator();
-	//trayIconMenu->addAction(ui->actionConfigure);
-	//trayIconMenu->addSeparator();
+	trayIconMenu->addAction(ui->actionConfigure);
+	trayIconMenu->addSeparator();
 	trayIconMenu->addAction(ui->actionQuit);
 	trayIcon->setContextMenu(trayIconMenu);
 	trayIcon->setIcon(QIcon(":/images/icon.png"));
@@ -19,11 +19,21 @@ MainWindow::MainWindow(QWidget *parent) :
 	setWindowFlags(Qt::Dialog);
 	QSettings settings;
 	QString dictionary;
-	dictionary = settings.value("dictionary",QVariant("English for Russians (TOP2000)")).toString();
+	dictionary = settings.value("dictionary",QVariant("English for Russians (TOP2500)")).toString();
 	dictionary.append(".dict");
 
 	if (!QSqlDatabase::drivers().contains("QSQLITE")) {
 		QMessageBox::critical(this, "Unable to load database", "This application needs the SQLITE driver");
+	}
+	// Looking up for dictionary files
+	QDir dir = QDir::current();
+	QStringList filters;
+	filters << "*.dict";
+	dir.setNameFilters(filters);
+	QFileInfoList list = dir.entryInfoList();
+	for (int i = 0; i < list.size(); ++i) {
+		QFileInfo fileInfo = list.at(i);
+		ui->comboBoxDictionary->addItem(fileInfo.fileName().left(fileInfo.fileName().length()-5), fileInfo.fileName());
 	}
 	QFile dictFile(dictionary);
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
@@ -34,9 +44,10 @@ MainWindow::MainWindow(QWidget *parent) :
 			qApp->quit();
 		}
 		else {
+			QStringList tables = db.tables();
 			if (! tables.contains("mdict", Qt::CaseInsensitive)) {
-				QSqlQuery q;
-				q.exec(QLatin1String("create table mdict(id integer primary key autoincrement, foreignword varchar, transcription varchar, nativeword varchar, lastshow datetime, iteration integer default 0)"));
+				QSqlQuery query;
+				query.exec(QLatin1String("create table mdict(id integer autoincrement primary key , foreignword varchar, transcription varchar, nativeword varchar, lastshow datetime, iteration integer default 0)"));
 			}
 		}
 	}
@@ -45,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
 													" from <a href=\"http://www.zoonman.com/projects/memorizer/\">Memorizer page</a>");
 		qApp->quit();
 	}
+
 }
 
 MainWindow::~MainWindow()
@@ -67,10 +79,16 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::on_lineEdit_textChanged(QString )
 {
-		//
+	//
 }
 
 void MainWindow::on_actionGetNewWord_triggered()
 {
 	show();
+	ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_actionConfigure_triggered()
+{
+	ui->stackedWidget->setCurrentIndex(1);
 }

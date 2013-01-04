@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui
+ QT += sql
 
 TARGET = memorizer
 TEMPLATE = app
