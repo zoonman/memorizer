@@ -17,11 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	trayIcon->setIcon(QIcon(":/images/icon.png"));
 	trayIcon->show();
 	setWindowFlags(Qt::Dialog);
-	QSettings settings;
-	QString dictionary;
+	// Load configuration
 	dictionary = settings.value("dictionary",QVariant("English for Russians (TOP2500)")).toString();
 	dictionary.append(".dict");
-
+	timeBegin = settings.value("timeBegin",QVariant("19:00:00")).toTime();
+	timeEnd = settings.value("timeEnd",QVariant("22:00:00")).toTime();
+	newWordsPerDay = settings.value("newWordsPerDay",QVariant("5")).toUInt();
+	minimalTimeInterval = settings.value("minimalTimeInterval",QVariant("10")).toUInt() * 10;
+	// Plug Database
 	if (!QSqlDatabase::drivers().contains("QSQLITE")) {
 		QMessageBox::critical(this, "Unable to load database", "This application needs the SQLITE driver");
 	}
@@ -47,7 +50,11 @@ MainWindow::MainWindow(QWidget *parent) :
 			QStringList tables = db.tables();
 			if (! tables.contains("mdict", Qt::CaseInsensitive)) {
 				QSqlQuery query;
-				query.exec(QLatin1String("create table mdict(id integer autoincrement primary key , foreignword varchar, transcription varchar, nativeword varchar, lastshow datetime, iteration integer default 0)"));
+				query.exec(QLatin1String("create table mdict(id integer autoincrement primary key, foreignword varchar, transcription varchar, nativeword varchar, lastshow datetime, iteration integer default 0)"));
+			}
+			else {
+				// Everything is good
+				// Now we can learn
 			}
 		}
 	}
@@ -56,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
 													" from <a href=\"http://www.zoonman.com/projects/memorizer/\">Memorizer page</a>");
 		qApp->quit();
 	}
+
 
 }
 

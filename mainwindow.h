@@ -25,13 +25,24 @@ public:
     ~MainWindow();
 protected:
 		void closeEvent(QCloseEvent *event);
+		void getWord();
 private:
     Ui::MainWindow *ui;
 		QSystemTrayIcon *trayIcon;
 		QMenu *trayIconMenu;
+		unsigned int wordsShowed;
+		unsigned int newWordsPerDay;
+		unsigned int minimalTimeInterval;
+		QTime timeBegin;
+		QTime timeEnd;
+		QDate currentDate;
+		QSettings settings;
+		QString dictionary;
+		unsigned int wordId;
+
 private slots:
 	void on_actionConfigure_triggered();
- void on_actionGetNewWord_triggered();
+	void on_actionGetNewWord_triggered();
 	void on_lineEdit_textChanged(QString );
 	void on_actionQuit_triggered();
 };
