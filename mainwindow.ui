@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
+    <width>402</width>
     <height>228</height>
    </rect>
   </property>
@@ -31,7 +31,16 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
@@ -199,8 +208,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>403</width>
-     <height>19</height>
+     <width>402</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">

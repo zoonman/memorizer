@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
-#include <QMainWindow>
-#include <QSystemTrayIcon>
-#include <QMessageBox>
+#include <QObject>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QSystemTrayIcon>
+#include <QtWidgets/QMessageBox>
 #include <QFile>
 #include <QDir>
 #include <QtSql>
