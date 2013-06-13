@@ -74,10 +74,10 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::closeEvent(QCloseEvent *event)
-{
+{ /*
 	if (trayIcon->isVisible()) {
-		hide();
-	}
+		// hide();
+	}*/
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -99,4 +99,29 @@ void MainWindow::on_actionGetNewWord_triggered()
 void MainWindow::on_actionConfigure_triggered()
 {
 	ui->stackedWidget->setCurrentIndex(1);
+}
+
+/*
+
+Learning algorithm
+1. Read configs
+2. Start timer
+3. OnTime
+	stop timer
+	Lookup for learning words
+	if learning_words_count = 0 getNewWord (increase new words timer)
+	show word
+	store time for this word
+
+*/
+
+
+
+void MainWindow::on_toolButton_clicked()
+{
+	QString my;
+	my = "http://translate.google.com/translate_tts?ie=UTF-8&q=___&tl=en&total=1&idx=0&textlen=5&prev=input";
+	my = my.replace(QRegExp("___"),ui->lineEditNewWord->text());
+	player.setMedia(QUrl(my));
+	player.play();
 }

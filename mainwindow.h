@@ -10,7 +10,7 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-
+#include <QtMultimedia/QMediaPlayer>
 #include <QSettings>
 namespace Ui {
     class MainWindow;
@@ -39,12 +39,15 @@ private:
 		QSettings settings;
 		QString dictionary;
 		unsigned int wordId;
+		QMediaPlayer player;
 
 private slots:
 	void on_actionConfigure_triggered();
 	void on_actionGetNewWord_triggered();
 	void on_lineEdit_textChanged(QString );
 	void on_actionQuit_triggered();
+
+	void on_toolButton_clicked();
 };
 
 #endif // MAINWINDOW_H
