@@ -113,6 +113,22 @@ Learning algorithm
 	show word
 	store time for this word
 
+
+
+	Learning structure
+	30 min after
+	1 day
+	10 days
+	30
+	60
+
+
+	--
+
+	1. Start PC
+	2. Words per hour 1..5
+
+
 */
 
 
