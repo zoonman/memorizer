@@ -49,7 +49,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageCard">
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
@@ -147,6 +147,9 @@
               <pointsize>10</pointsize>
              </font>
             </property>
+            <property name="maxLength">
+             <number>64</number>
+            </property>
             <property name="placeholderText">
              <string>Type the word here</string>
             </property>
@@ -198,6 +201,66 @@
            </item>
            <item row="0" column="1">
             <widget class="QComboBox" name="comboBoxDictionary"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>New words per day</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Start learning time at</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QTimeEdit" name="timeEditStart"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Finish learning time at</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QTimeEdit" name="timeEditFinish"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Interval between words (min)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="spinBoxNewWords">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>30</number>
+             </property>
+             <property name="value">
+              <number>5</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QSpinBox" name="spinBoxIntervalBetweenWords">
+             <property name="minimum">
+              <number>5</number>
+             </property>
+             <property name="maximum">
+              <number>360</number>
+             </property>
+             <property name="value">
+              <number>30</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

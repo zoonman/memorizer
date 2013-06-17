@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets multimedia
+QT       += core  widgets multimedia
  QT += sql
 
 TARGET = memorizer

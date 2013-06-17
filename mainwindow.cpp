@@ -21,9 +21,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	dictionary = settings.value("dictionary",QVariant("English for Russians (TOP2500)")).toString();
 	dictionary.append(".dict");
 	timeBegin = settings.value("timeBegin",QVariant("19:00:00")).toTime();
+	ui->timeEditStart->setTime(timeBegin);
 	timeEnd = settings.value("timeEnd",QVariant("22:00:00")).toTime();
+	ui->timeEditFinish->setTime(timeEnd);
 	newWordsPerDay = settings.value("newWordsPerDay",QVariant("5")).toUInt();
-	minimalTimeInterval = settings.value("minimalTimeInterval",QVariant("10")).toUInt() * 10;
+	ui->spinBoxNewWords->setValue(newWordsPerDay);
+	minimalTimeInterval = settings.value("minimalTimeInterval",QVariant("10")).toUInt();
+	ui->spinBoxIntervalBetweenWords->setValue(minimalTimeInterval);
 	// Plug Database
 	if (!QSqlDatabase::drivers().contains("QSQLITE")) {
 		QMessageBox::critical(this, "Unable to load database", "This application needs the SQLITE driver");
@@ -76,8 +80,9 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 { /*
 	if (trayIcon->isVisible()) {
-		// hide();
+		// hide();event->ignore();
 	}*/
+
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -85,10 +90,6 @@ void MainWindow::on_actionQuit_triggered()
 	qApp->quit();
 }
 
-void MainWindow::on_lineEdit_textChanged(QString )
-{
-	//
-}
 
 void MainWindow::on_actionGetNewWord_triggered()
 {
@@ -137,7 +138,33 @@ void MainWindow::on_toolButton_clicked()
 {
 	QString my;
 	my = "http://translate.google.com/translate_tts?ie=UTF-8&q=___&tl=en&total=1&idx=0&textlen=5&prev=input";
-	my = my.replace(QRegExp("___"),ui->lineEditNewWord->text());
+	my = my.replace(QRegExp("___"), QUrl::toPercentEncoding(ui->lineEditNewWord->text(),"",""));
+	qDebug() << my;
 	player.setMedia(QUrl(my));
 	player.play();
+}
+
+void MainWindow::on_comboBoxDictionary_currentTextChanged(const QString &arg1)
+{
+	settings.setValue("dictionary",arg1);
+}
+
+void MainWindow::on_spinBoxNewWords_valueChanged(int arg1)
+{
+	settings.setValue("newWordsPerDay",arg1);
+}
+
+void MainWindow::on_timeEditStart_timeChanged(const QTime &time)
+{
+	settings.setValue("timeBegin",time);
+}
+
+void MainWindow::on_timeEditFinish_timeChanged(const QTime &time)
+{
+	settings.setValue("timeEnd",time);
+}
+
+void MainWindow::on_spinBoxIntervalBetweenWords_valueChanged(int arg1)
+{
+	settings.setValue("minimalTimeInterval",arg1);
 }
